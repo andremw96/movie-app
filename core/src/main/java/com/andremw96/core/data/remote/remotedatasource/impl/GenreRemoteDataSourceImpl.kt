@@ -15,7 +15,7 @@ class GenreRemoteDataSourceImpl @Inject constructor(
     private val coroutineDispatcher: CoroutineDispatcher,
     private val movieDbApi: MovieDbApi,
 ) : GenreRemoteDataSource {
-    override fun getCurrenciesWithLatestExchangeRate(): Flow<ApiResponse<GenreListResponse>> {
+    override fun getGenreList(): Flow<ApiResponse<GenreListResponse>> {
         return flow {
             try {
                 val genres = movieDbApi.getGenreList()
