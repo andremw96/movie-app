@@ -23,13 +23,13 @@ android {
             debug {
                 debuggable true
                 buildConfigField "String", "MOVIE_DB_API_KEY", "\"52b1fef17cd428dc289311a98ecfd8b0\""
-                buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+                buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
             }
             release {
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
                 buildConfigField "String", "MOVIE_DB_API_KEY", "\"52b1fef17cd428dc289311a98ecfd8b0\""
-                buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+                buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
             }
         }
     }

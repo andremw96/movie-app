@@ -1,9 +1,9 @@
 package com.andremw96.core.di
 
 import com.andremw96.core.BuildConfig
-import com.andremw96.core.data.remote.GenreRemoteDataSource
-import com.andremw96.core.data.remote.GenreRemoteDataSourceImpl
 import com.andremw96.core.data.remote.network.MovieDbApi
+import com.andremw96.core.data.remote.remotedatasource.GenreRemoteDataSource
+import com.andremw96.core.data.remote.remotedatasource.impl.GenreRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

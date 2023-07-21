@@ -1,9 +1,9 @@
-package com.andremw96.core.data.remote
+package com.andremw96.core.data.remote.remotedatasource
 
 import com.andremw96.core.data.remote.network.ApiResponse
 import com.andremw96.core.data.remote.response.GenreListResponse
 import kotlinx.coroutines.flow.Flow
 
 interface GenreRemoteDataSource {
-    fun getCurrenciesWithLatestExchangeRate(): Flow<ApiResponse<GenreListResponse>>
+    fun getGenreList(): Flow<ApiResponse<GenreListResponse>>
 }

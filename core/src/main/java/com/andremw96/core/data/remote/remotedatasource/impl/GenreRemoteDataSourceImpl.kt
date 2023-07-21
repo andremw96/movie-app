@@ -1,7 +1,8 @@
-package com.andremw96.core.data.remote
+package com.andremw96.core.data.remote.remotedatasource.impl
 
 import com.andremw96.core.data.remote.network.ApiResponse
 import com.andremw96.core.data.remote.network.MovieDbApi
+import com.andremw96.core.data.remote.remotedatasource.GenreRemoteDataSource
 import com.andremw96.core.data.remote.response.GenreListResponse
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
