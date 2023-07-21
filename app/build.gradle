@@ -9,12 +9,12 @@ apply from: '../project_version.gradle'
 
 android {
     namespace 'com.andremw96.movie_app'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.andremw96.movie_app"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
 
     implementation "androidx.compose.ui:ui:$jetpack_compose_version"
     implementation "androidx.compose.material:material:$jetpack_compose_version"
