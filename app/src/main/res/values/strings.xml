@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">movie-app</string>
+
+    <string name="genre_list_title">Genre List</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="retry">Retry</string>
+    <string name="data_not_found">Data Not Found</string>
 </resources>
