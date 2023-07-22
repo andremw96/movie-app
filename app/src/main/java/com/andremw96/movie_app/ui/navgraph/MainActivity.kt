@@ -1,4 +1,4 @@
-package com.andremw96.movie_app.ui.screen.genrelist
+package com.andremw96.movie_app.ui.navgraph
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.andremw96.movie_app.ui.screen.genrelist.GenreListScreen
+import com.andremw96.movie_app.ui.screen.genrelist.GenreListViewModel
 import com.andremw96.movie_app.ui.theme.MovieAppCurrencyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GenreListActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: GenreListViewModel by viewModels()
 

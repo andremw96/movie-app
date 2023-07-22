@@ -16,4 +16,5 @@ ext {
     jetpack_compose_version = "1.4.3"
     jetpack_compose_activity_compose_version = "1.7.2"
     jetpack_compose_testing_version = "1.4.3"
+    coil_version = "2.4.0"
 }
