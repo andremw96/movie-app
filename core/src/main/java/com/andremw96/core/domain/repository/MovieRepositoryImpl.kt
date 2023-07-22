@@ -1,34 +1,35 @@
 package com.andremw96.core.domain.repository
 
-import com.andremw96.core.data.NetworkBoundResource
 import com.andremw96.core.data.Resource
 import com.andremw96.core.data.remote.network.ApiResponse
 import com.andremw96.core.data.remote.remotedatasource.GenreRemoteDataSource
-import com.andremw96.core.data.remote.response.GenreListResponse
+import com.andremw96.core.domain.mapper.GenreListResponseToSchema
 import com.andremw96.core.domain.schema.Genre
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val genreRemoteDataSource: GenreRemoteDataSource,
+    private val genreListResponseToSchema: GenreListResponseToSchema,
 ) : MovieRepository {
-    override fun getGenreList(): Flow<Resource<List<Genre>>> =
-        object : NetworkBoundResource<List<Genre>, GenreListResponse>() {
-            override fun loadFromDB(): Flow<List<Genre>> {
-                return flowOf()
+    override fun getGenreList(): Flow<Resource<List<Genre>>> {
+        return flow {
+            emit(Resource.Loading())
+            val apiResponse = genreRemoteDataSource.getGenreList()
+            apiResponse.collect {
+                when (it) {
+                    is ApiResponse.Success -> {
+                        emit(Resource.Success(genreListResponseToSchema(it.data)))
+                    }
+                    is ApiResponse.Empty -> {
+                        emit(Resource.Success(emptyList()))
+                    }
+                    is ApiResponse.Error -> {
+                        emit(Resource.Error(it.errorMessage))
+                    }
+                }
             }
-
-            override fun createCall(): Flow<ApiResponse<GenreListResponse>> {
-                return genreRemoteDataSource.getGenreList()
-            }
-
-            override suspend fun saveCallResult(data: GenreListResponse) {
-                // not yet implement the local data
-            }
-
-            override fun shouldFetch(data: List<Genre>?): Boolean {
-                return true
-            }
-        }.asFlow()
+        }
+    }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andremw96.core.data.Resource
 import com.andremw96.core.di.IoDispatcher
-import com.andremw96.core.domain.usecase.GetGenre
+import com.andremw96.core.domain.usecase.GetGenreList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GenreListViewModel @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
-    private val getGenre: GetGenre,
+    private val getGenreList: GetGenreList,
 ) : ViewModel(), GenreListCallbacks {
     private val _viewState: MutableStateFlow<GenreListViewState> = MutableStateFlow(
         GenreListViewState.initialState()
@@ -25,7 +25,7 @@ class GenreListViewModel @Inject constructor(
 
     override fun loadGenreList() {
         viewModelScope.launch(coroutineDispatcher) {
-            val genreList = getGenre()
+            val genreList = getGenreList()
             genreList.collect {
                 when (it) {
                     is Resource.Loading -> {

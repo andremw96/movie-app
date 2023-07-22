@@ -1,8 +1,10 @@
 package com.andremw96.core.di
 
+import com.andremw96.core.domain.mapper.GenreListResponseToSchema
+import com.andremw96.core.domain.mapper.impl.GenreListResponseToSchemaImpl
 import com.andremw96.core.domain.repository.MovieRepository
-import com.andremw96.core.domain.usecase.GetGenre
-import com.andremw96.core.domain.usecase.GetGenreImpl
+import com.andremw96.core.domain.usecase.GetGenreList
+import com.andremw96.core.domain.usecase.impl.GetGenreListImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,5 +18,10 @@ class UseCaseModule {
     @Singleton
     fun provideGetGenre(
         movieRepository: MovieRepository,
-    ): GetGenre = GetGenreImpl(movieRepository = movieRepository)
+    ): GetGenreList = GetGenreListImpl(movieRepository = movieRepository)
+
+    @Provides
+    @Singleton
+    fun provideGenreListResponseToSchema(): GenreListResponseToSchema =
+        GenreListResponseToSchemaImpl()
 }

@@ -1,17 +1,20 @@
 package com.andremw96.movie_app.ui.genrelist
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.andremw96.movie_app.R
+import com.andremw96.core.domain.schema.Genre
+import com.andremw96.movie_app.ui.widget.MovieAppBar
+import com.andremw96.movie_app.ui.widget.MovieEmptyPage
+import com.andremw96.movie_app.ui.widget.MovieErrorPage
 
 
 @Composable
@@ -21,7 +24,7 @@ fun GenreListScreen(
 ) {
     Scaffold(
         topBar = {
-            GenreListAppBar()
+            MovieAppBar()
         },
         content = { paddingValues ->
             Column(
@@ -42,25 +45,22 @@ fun GenreListScreen(
                         }
                     }
                     viewState.errorMessage != null -> {
-                        GenreListErrorPage(
+                        MovieErrorPage(
                             errorMessage = viewState.errorMessage,
-                            callbacks = callbacks,
+                            retryOnClick = {
+                                callbacks.loadGenreList()
+                            },
                         )
                     }
                     viewState.genreList.isEmpty() -> {
-                        GenreListEmptyPage(callbacks = callbacks)
+                        MovieEmptyPage(retryOnClick = {
+                            callbacks.loadGenreList()
+                        })
                     }
                     else -> {
-                        LazyRow {
-                            items(viewState.genreList.size) {
-                                Text(
-                                    viewState.genreList[it].name
-                                )
-
-                                Divider(
-                                    color = Color.LightGray,
-                                    thickness = 2.dp
-                                )
+                        LazyColumn {
+                            items(viewState.genreList) {
+                                GenreItem(genre = it)
                             }
                         }
                     }
@@ -71,109 +71,16 @@ fun GenreListScreen(
 }
 
 @Composable
-fun GenreListAppBar(
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .background(color = Color.White)
+fun GenreItem(genre: Genre) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
             .fillMaxWidth(),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(all = 16.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(R.string.genre_list_title),
-                color = Color.Gray,
-            )
-        }
-
-        Divider(
-            color = Color.LightGray,
-            thickness = 2.dp
-        )
-    }
-}
-
-@Composable
-fun GenreListErrorPage(
-    errorMessage: String,
-    modifier: Modifier = Modifier,
-    callbacks: GenreListCallbacks,
-) {
-    Column(
-        modifier = modifier
-            .background(color = Color.White)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        elevation = 4.dp
     ) {
         Text(
-            text = stringResource(
-                id = R.string.something_went_wrong
-            ),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.h5
+            text = genre.name,
+            modifier = Modifier.padding(16.dp)
         )
-
-        Spacer(modifier = Modifier.padding(12.dp))
-
-        Text(
-            text = errorMessage,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.padding(12.dp))
-
-        Button(onClick = {
-            callbacks.loadGenreList()
-        }) {
-            Text(text = stringResource(id = R.string.retry))
-        }
-    }
-}
-
-@Composable
-fun GenreListEmptyPage(
-    modifier: Modifier = Modifier,
-    callbacks: GenreListCallbacks?,
-) {
-    Column(
-        modifier = modifier
-            .background(color = Color.White)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(
-                id = R.string.something_went_wrong
-            ),
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.h5
-        )
-
-        Spacer(modifier = Modifier.padding(12.dp))
-
-        Text(
-            text = stringResource(
-                id = R.string.data_not_found
-            ),
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.padding(12.dp))
-
-        if (callbacks != null) {
-            Button(onClick = {
-                callbacks.loadGenreList()
-            }) {
-                Text(text = stringResource(id = R.string.retry))
-            }
-        }
     }
 }
