@@ -50,10 +50,6 @@ X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 F
 project_version.gradle,0/4/0429e7471e4801c1f559433485e0dca039c597af
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-|
-Lapp/src/main/java/com/andremw96/movie_app/ui/genrelist/GenreListCallbacks.kt,6/f/6fc40e9aa67017cdd815b1fe2906b072c7391002
 |
 Lapp/src/main/java/com/andremw96/movie_app/ui/genrelist/GenreListViewState.kt,e/5/e546199a6d36d7e9e64d9260da24e262b9f0424b
 {

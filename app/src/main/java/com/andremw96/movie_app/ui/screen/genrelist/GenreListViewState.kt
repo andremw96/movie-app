@@ -1,4 +1,4 @@
-package com.andremw96.movie_app.ui.genrelist
+package com.andremw96.movie_app.ui.screen.genrelist
 
 import com.andremw96.core.domain.schema.Genre
 

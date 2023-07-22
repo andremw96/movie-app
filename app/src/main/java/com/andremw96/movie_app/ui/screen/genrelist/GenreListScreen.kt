@@ -1,5 +1,6 @@
-package com.andremw96.movie_app.ui.genrelist
+package com.andremw96.movie_app.ui.screen.genrelist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -60,7 +61,12 @@ fun GenreListScreen(
                     else -> {
                         LazyColumn {
                             items(viewState.genreList) {
-                                GenreItem(genre = it)
+                                GenreItem(
+                                    genre = it,
+                                    onItemClicked = {
+                                        // go to movie list by genre screen
+                                    }
+                                )
                             }
                         }
                     }
@@ -71,11 +77,17 @@ fun GenreListScreen(
 }
 
 @Composable
-fun GenreItem(genre: Genre) {
+fun GenreItem(
+    genre: Genre,
+    onItemClicked: () -> Unit,
+) {
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onItemClicked()
+            },
         elevation = 4.dp
     ) {
         Text(
