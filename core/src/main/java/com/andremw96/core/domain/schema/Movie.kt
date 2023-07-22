@@ -1,5 +1,9 @@
 package com.andremw96.core.domain.schema
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Movie(
     val adult: Boolean,
     val backdropPath: String,
@@ -15,4 +19,4 @@ data class Movie(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int,
-)
+): Parcelable

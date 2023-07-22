@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MovieAppCurrencyTheme(
+fun MovieAppTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(

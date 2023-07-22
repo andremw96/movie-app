@@ -21,7 +21,7 @@ import com.andremw96.movie_app.ui.widget.MovieErrorPage
 
 
 @Composable
-fun GenreListScreen(
+fun MovieListByGenreScreen(
     genreId: String,
     viewState: MovieListByGenreViewState,
     callbacks: MovieListByGenreCallbacks,

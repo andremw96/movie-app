@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.andremw96.core.domain.schema.Genre
+import com.andremw96.movie_app.ui.navgraph.NavGraphConstant
 import com.andremw96.movie_app.ui.widget.MovieAppBar
 import com.andremw96.movie_app.ui.widget.MovieEmptyPage
 import com.andremw96.movie_app.ui.widget.MovieErrorPage
@@ -22,6 +24,7 @@ import com.andremw96.movie_app.ui.widget.MovieErrorPage
 fun GenreListScreen(
     viewState: GenreListViewState,
     callbacks: GenreListCallbacks,
+    navController: NavController,
 ) {
     Scaffold(
         topBar = {
@@ -65,6 +68,7 @@ fun GenreListScreen(
                                     genre = it,
                                     onItemClicked = {
                                         // go to movie list by genre screen
+                                        navController.navigate("${NavGraphConstant.MOVIE_LIST_BY_GENRE}/${it.id}")
                                     }
                                 )
                             }

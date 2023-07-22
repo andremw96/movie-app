@@ -5,7 +5,7 @@ import com.andremw96.core.data.remote.network.ApiResponse
 import com.andremw96.core.data.remote.remotedatasource.GenreRemoteDataSource
 import com.andremw96.core.data.remote.remotedatasource.MovieByGenreDataSource
 import com.andremw96.core.domain.mapper.GenreListResponseToSchema
-import com.andremw96.core.domain.mapper.MovieResponseToSchemaImpl
+import com.andremw96.core.domain.mapper.MovieResponseToSchema
 import com.andremw96.core.domain.schema.Genre
 import com.andremw96.core.domain.schema.Movie
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val genreRemoteDataSource: GenreRemoteDataSource,
     private val movieByGenreDataSource: MovieByGenreDataSource,
     private val genreListResponseToSchema: GenreListResponseToSchema,
-    private val movieResponseToSchemaImpl: MovieResponseToSchemaImpl,
+    private val movieResponseToSchema: MovieResponseToSchema,
 ) : MovieRepository {
     override fun getGenreList(): Flow<Resource<List<Genre>>> {
         return flow {
@@ -43,7 +43,7 @@ class MovieRepositoryImpl @Inject constructor(
             movieByGenreDataSource.getMovieListByGenreId(genreId).collect {
                 when (it) {
                     is ApiResponse.Success -> {
-                        emit(Resource.Success(movieResponseToSchemaImpl(it.data.results)))
+                        emit(Resource.Success(movieResponseToSchema(it.data.results)))
                     }
                     is ApiResponse.Empty -> {
                         emit(Resource.Success(emptyList()))

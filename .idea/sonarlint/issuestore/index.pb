@@ -38,16 +38,12 @@ e
 5app/src/main/java/com/andremw96/movie_app/MovieApp.kt,5/b/5b8bb9a40dcd55627a386de36b5ba25c8bdad318
 ?
 settings.gradle,0/5/05efc8b1657769a27696d478ded1e95f38737233
-A
-core/build.gradle,9/1/918ca359602392354123b7d3b63264baf7ea9dde
 J
 shared_dependencies.gradle,b/e/bea21ad436ad8008e4327b60ad9d3401a26c6abc
 X
 (gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 |
 Lapp/src/main/java/com/andremw96/movie_app/ui/genrelist/GenreListViewState.kt,e/5/e546199a6d36d7e9e64d9260da24e262b9f0424b
-{
-Kapp/src/main/java/com/andremw96/movie_app/ui/theme/MovieAppCurrencyTheme.kt,e/c/ec41a8941f6eb5e229adc072a943dae3a4fd6994
 f
 6core/src/main/java/com/andremw96/core/data/Resource.kt,c/b/cb5d9c70be4ae2195e9add683b65e3ce6042283f
 t
