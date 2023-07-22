@@ -17,6 +17,7 @@ ext {
     jetpack_compose_activity_compose_version = "1.7.2"
     jetpack_compose_testing_version = "1.4.3"
     coil_version = "2.4.0"
-    nav_version = "2.5.2"
-    gson_version = "2.10"
+    nav_version = "2.6.0"
+    hilt_nav_compose_version = "1.0.0"
+    gson_version = "2.10.1"
 }

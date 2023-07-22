@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,7 +21,7 @@ fun MovieAppNavigation(
 ) {
     NavHost(navController = navController, startDestination = NavGraphConstant.GENRE_LIST) {
         composable(route = NavGraphConstant.GENRE_LIST) {
-            val viewModel: GenreListViewModel = viewModel()
+            val viewModel: GenreListViewModel = hiltViewModel()
             val viewState by viewModel.viewState.collectAsState()
 
             LaunchedEffect(key1 = Unit, block = {
@@ -35,12 +35,15 @@ fun MovieAppNavigation(
             )
         }
         composable(
-            route = "${NavGraphConstant.MOVIE_LIST_BY_GENRE}/${NavGraphConstant.GENRE_ID}",
+            route = "${NavGraphConstant.MOVIE_LIST_BY_GENRE}/{${NavGraphConstant.GENRE_ID}}",
             arguments = listOf(
-                navArgument(NavGraphConstant.GENRE_ID) { type = NavType.Companion.StringType }
+                navArgument(NavGraphConstant.GENRE_ID) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
             )
         ) {
-            val viewModel: MovieListByGenreViewModel = viewModel()
+            val viewModel: MovieListByGenreViewModel = hiltViewModel()
             val viewState by viewModel.viewState.collectAsState()
 
             val genreId = it.arguments?.getString(NavGraphConstant.GENRE_ID)
