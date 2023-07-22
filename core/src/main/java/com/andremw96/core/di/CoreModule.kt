@@ -3,6 +3,8 @@ package com.andremw96.core.di
 import com.andremw96.core.BuildConfig
 import com.andremw96.core.data.remote.network.MovieDbApi
 import com.andremw96.core.data.remote.remotedatasource.GenreRemoteDataSource
+import com.andremw96.core.data.remote.remotedatasource.MovieByGenreDataSource
+import com.andremw96.core.data.remote.remotedatasource.impl.MovieByGenreDataSourceImpl
 import com.andremw96.core.data.remote.remotedatasource.impl.GenreRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
@@ -60,6 +62,16 @@ class CoreModule {
         @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
         movieDbApi: MovieDbApi,
     ): GenreRemoteDataSource = GenreRemoteDataSourceImpl(
+        coroutineDispatcher = coroutineDispatcher,
+        movieDbApi = movieDbApi,
+    )
+
+    @Provides
+    @Singleton
+    fun provideMovieByGenreRemoteDataSource(
+        @IoDispatcher coroutineDispatcher: CoroutineDispatcher,
+        movieDbApi: MovieDbApi,
+    ): MovieByGenreDataSource = MovieByGenreDataSourceImpl(
         coroutineDispatcher = coroutineDispatcher,
         movieDbApi = movieDbApi,
     )
