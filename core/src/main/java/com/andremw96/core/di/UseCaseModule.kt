@@ -2,7 +2,7 @@ package com.andremw96.core.di
 
 import com.andremw96.core.domain.mapper.GenreListResponseToSchema
 import com.andremw96.core.domain.mapper.MovieResponseToSchema
-import com.andremw96.core.domain.mapper.MovieResponseToSchemaImpl
+import com.andremw96.core.domain.mapper.impl.MovieResponseToSchemaImpl
 import com.andremw96.core.domain.mapper.impl.GenreListResponseToSchemaImpl
 import com.andremw96.core.domain.repository.MovieRepository
 import com.andremw96.core.domain.usecase.*

@@ -1,9 +1,10 @@
-package com.andremw96.core.domain.mapper
+package com.andremw96.core.domain.mapper.impl
 
 import com.andremw96.core.data.remote.response.MovieDetailResponse
 import com.andremw96.core.data.remote.response.MovieListByGenreResponse
 import com.andremw96.core.data.remote.response.MovieReviewListResponse
 import com.andremw96.core.data.remote.response.MovieTrailerListResponse
+import com.andremw96.core.domain.mapper.MovieResponseToSchema
 import com.andremw96.core.domain.schema.Movie
 import com.andremw96.core.domain.schema.MovieDetail
 import com.andremw96.core.domain.schema.MovieReview
