@@ -20,6 +20,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.andremw96.core.domain.schema.Movie
 import com.andremw96.movie_app.R
+import com.andremw96.movie_app.ui.navgraph.NavGraphConstant
 import com.andremw96.movie_app.ui.widget.InfiniteListHandler
 import com.andremw96.movie_app.ui.widget.MovieAppBar
 import com.andremw96.movie_app.ui.widget.MovieEmptyPage
@@ -80,7 +81,7 @@ fun MovieListByGenreScreen(
                             MovieItem(
                                 movie = it,
                                 onItemClicked = {
-
+                                    navController.navigate("${NavGraphConstant.MOVIE_DETAIL_BY_MOVIE_ID}/${it.id}")
                                 }
                             )
                         }

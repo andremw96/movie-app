@@ -35,12 +35,12 @@ class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
     override fun movieResponseDetailToSchema(movieDetailResponse: MovieDetailResponse): MovieDetail {
         return MovieDetail(
             adult = movieDetailResponse.adult,
-            backdropPath = movieDetailResponse.backdropPath,
+            backdropPath = movieDetailResponse.backdropPath ?: "",
             belongsToCollection = MovieDetail.BelongsToCollection(
-                backdropPath = movieDetailResponse.belongsToCollection.backdropPath,
-                id = movieDetailResponse.belongsToCollection.id,
-                name = movieDetailResponse.belongsToCollection.name,
-                posterPath = movieDetailResponse.belongsToCollection.posterPath,
+                backdropPath = movieDetailResponse.belongsToCollection?.backdropPath ?: "",
+                id = movieDetailResponse.belongsToCollection?.id ?: -1,
+                name = movieDetailResponse.belongsToCollection?.name ?: "",
+                posterPath = movieDetailResponse.belongsToCollection?.posterPath ?: "",
             ),
             budget = movieDetailResponse.budget,
             genres = movieDetailResponse.genres.map {
@@ -59,16 +59,16 @@ class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
             posterPath = movieDetailResponse.posterPath,
             productionCompanies = movieDetailResponse.productionCompanies.map {
                 MovieDetail.ProductionCompany(
-                    id = it.id,
-                    logoPath = it.logoPath,
-                    name = it.name,
-                    originCountry = it.originCountry,
+                    id = it?.id ?: -1,
+                    logoPath = it?.logoPath ?: "",
+                    name = it?.name ?: "",
+                    originCountry = it?.originCountry ?: "",
                 )
             },
             productionCountries = movieDetailResponse.productionCountries.map {
                 MovieDetail.ProductionCountry(
-                    iso31661 = it.iso31661,
-                    name = it.name
+                    iso31661 = it?.iso31661 ?: "",
+                    name = it?.name ?: ""
                 )
             },
             releaseDate = movieDetailResponse.releaseDate,

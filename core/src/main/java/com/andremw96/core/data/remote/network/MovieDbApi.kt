@@ -23,7 +23,7 @@ interface MovieDbApi {
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetailById(
-        @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
         @Path("movie_id") movieId: String,
+        @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
     ): MovieDetailResponse
 }

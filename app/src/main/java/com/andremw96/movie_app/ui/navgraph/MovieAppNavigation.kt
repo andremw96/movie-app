@@ -12,6 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.andremw96.movie_app.ui.screen.genrelist.GenreListScreen
 import com.andremw96.movie_app.ui.screen.genrelist.GenreListViewModel
+import com.andremw96.movie_app.ui.screen.moviedetail.MovieDetailScreen
+import com.andremw96.movie_app.ui.screen.moviedetail.MovieDetailViewModel
 import com.andremw96.movie_app.ui.screen.movielistbygenre.MovieListByGenreScreen
 import com.andremw96.movie_app.ui.screen.movielistbygenre.MovieListByGenreViewModel
 
@@ -59,11 +61,39 @@ fun MovieAppNavigation(
 
             MovieListByGenreScreen(
                 genreId = genreId ?: "",
-                genreName = genreName?: "",
+                genreName = genreName ?: "",
                 viewState = viewState,
                 callbacks = viewModel,
                 navController = navController,
             )
+        }
+        composable(
+            route = "${NavGraphConstant.MOVIE_DETAIL_BY_MOVIE_ID}/{${NavGraphConstant.MOVIE_ID}}",
+            arguments = listOf(
+                navArgument(NavGraphConstant.MOVIE_ID) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+            )
+        ) {
+            val viewModel: MovieDetailViewModel = hiltViewModel()
+            val viewState by viewModel.viewState.collectAsState()
+
+            val movieId = it.arguments?.getString(NavGraphConstant.MOVIE_ID)
+
+            if (movieId != null) {
+                LaunchedEffect(key1 = Unit, block = {
+                    viewModel.loadMovieDetailByMovieId(movieId = movieId)
+                })
+
+                MovieDetailScreen(
+                    movieId = movieId,
+                    viewState = viewState,
+                    callbacks = viewModel,
+                )
+            } else {
+                navController.popBackStack()
+            }
         }
     }
 }
