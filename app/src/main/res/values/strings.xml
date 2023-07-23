@@ -4,6 +4,7 @@
     <string name="genre_list_title">Genre List</string>
     <string name="movie_list_title">Movie List with Genre of</string>
     <string name="user_reviews_title">User reviews of</string>
+    <string name="watch_trailer_title">Watch Trailer Video of</string>
 
     <string name="something_went_wrong">Something went wrong</string>
     <string name="retry">Retry</string>

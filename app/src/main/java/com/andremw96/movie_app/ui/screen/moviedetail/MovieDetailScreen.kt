@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -84,7 +83,11 @@ fun MovieDetailScreen(
                 }
                 else -> {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        TrailerCard(viewState)
+                        TrailerCard(
+                            viewState
+                        ) { key, name ->
+                            navController.navigate("${NavGraphConstant.VIDEO_PLAYER}/$key/$name")
+                        }
 
                         OverviewCard(movieDetail = viewState.movieDetail)
 
@@ -227,6 +230,7 @@ fun ReviewItem(review: MovieReview.Result) {
 @Composable
 fun TrailerCard(
     viewState: MovieDetailViewState,
+    onItemClicked: (String, String) -> Unit,
 ) {
     if (viewState.errorMessageVideoTrailers == null) {
         // Display the movie poster image & video trailers
@@ -268,15 +272,22 @@ fun TrailerCard(
                     }
 
                     items(viewState.videoTrailers) {
-                        TrailerItem(trailer = it)
+                        TrailerItem(
+                            trailer = it,
+                            onItemClicked = onItemClicked,
+                        )
                     }
                 }
             }
         }
     }
 }
+
 @Composable
-fun TrailerItem(trailer: MovieTrailer) {
+fun TrailerItem(
+    trailer: MovieTrailer,
+    onItemClicked: (String, String) -> Unit,
+) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -328,7 +339,7 @@ fun TrailerItem(trailer: MovieTrailer) {
                 modifier = Modifier
                     .fillMaxSize()
                     .clickable {
-
+                        onItemClicked(trailer.key, trailer.name)
                     }
             )
         }

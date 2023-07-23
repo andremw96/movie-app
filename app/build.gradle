@@ -65,4 +65,7 @@ dependencies {
 
     // gson
     implementation("com.google.code.gson:gson:$gson_version")
+
+    // youtube player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtube_player_version")
 }

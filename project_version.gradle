@@ -21,4 +21,5 @@ ext {
     nav_version = "2.6.0"
     hilt_nav_compose_version = "1.0.0"
     gson_version = "2.10.1"
+    youtube_player_version = "11.1.0"
 }
