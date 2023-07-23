@@ -9,7 +9,4 @@ object Util {
         return "https://img.youtube.com/vi/$this/hqdefault.jpg"
     }
 
-    fun String.youtubeWatchVideoPath(): String {
-        return "https://www.youtube.com/watch?v=$this"
-    }
 }
