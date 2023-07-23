@@ -4,6 +4,7 @@ import com.andremw96.core.BuildConfig
 import com.andremw96.core.data.remote.response.GenreListResponse
 import com.andremw96.core.data.remote.response.MovieDetailResponse
 import com.andremw96.core.data.remote.response.MovieListByGenreResponse
+import com.andremw96.core.data.remote.response.MovieReviewListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -26,4 +27,10 @@ interface MovieDbApi {
         @Path("movie_id") movieId: String,
         @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
     ): MovieDetailResponse
+
+    @GET("movie/{movie_id}/reviews")
+    suspend fun getMovieReviewListById(
+        @Path("movie_id") movieId: String,
+        @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
+    ): MovieReviewListResponse
 }

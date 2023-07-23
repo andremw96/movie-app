@@ -2,8 +2,10 @@ package com.andremw96.core.domain.mapper
 
 import com.andremw96.core.data.remote.response.MovieDetailResponse
 import com.andremw96.core.data.remote.response.MovieListByGenreResponse
+import com.andremw96.core.data.remote.response.MovieReviewListResponse
 import com.andremw96.core.domain.schema.Movie
 import com.andremw96.core.domain.schema.MovieDetail
+import com.andremw96.core.domain.schema.MovieReview
 import javax.inject.Inject
 
 class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
@@ -87,6 +89,29 @@ class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
             video = movieDetailResponse.video,
             voteAverage = movieDetailResponse.voteAverage,
             voteCount = movieDetailResponse.voteCount,
+        )
+    }
+
+    override fun movieReviewListToSchema(movieReviewListResponse: MovieReviewListResponse): Triple<List<MovieReview.Result>, Int, Int> {
+        return Triple(
+            movieReviewListResponse.results.map {
+                MovieReview.Result(
+                    author = it.author,
+                    authorDetails = MovieReview.Result.AuthorDetails(
+                        avatarPath = it.authorDetails.avatarPath,
+                        name = it.authorDetails.name,
+                        rating = it.authorDetails.rating,
+                        username = it.authorDetails.username,
+                    ),
+                    content = it.content,
+                    createdAt = it.createdAt,
+                    id = it.id,
+                    updatedAt = it.updatedAt,
+                    url = it.url
+                )
+            },
+            movieReviewListResponse.totalPages,
+            movieReviewListResponse.totalResults
         )
     }
 }

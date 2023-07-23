@@ -2,6 +2,7 @@ package com.andremw96.movie_app.ui.screen.moviedetail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -62,46 +63,82 @@ fun MovieDetailScreen(
                 }
                 else -> {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        // Display the movie poster image
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("https://image.tmdb.org/t/p/w500/${viewState.movieDetail.posterPath}")
-                                .crossfade(true)
-                                .build(),
-                            contentDescription = null,
+                        Card(
                             modifier = Modifier
-                                .height(200.dp)
-                                .fillMaxWidth(),
-                            contentScale = ContentScale.Crop
-                        )
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            elevation = 4.dp,
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                // Display the movie poster image
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data("https://image.tmdb.org/t/p/w500/${viewState.movieDetail.posterPath}")
+                                        .crossfade(true)
+                                        .build(),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .height(200.dp)
+                                        .fillMaxWidth(),
+                                    contentScale = ContentScale.Crop
+                                )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                                Spacer(modifier = Modifier.height(16.dp))
 
-                        // Display the movie overview
-                        Text(
-                            text = "Overview",
-                            style = MaterialTheme.typography.h6
-                        )
-                        Text(
-                            text = viewState.movieDetail.overview,
-                            style = MaterialTheme.typography.body1,
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
+                                // Display the movie overview
+                                Text(
+                                    text = "Overview",
+                                    style = MaterialTheme.typography.h6
+                                )
+                                Text(
+                                    text = viewState.movieDetail.overview,
+                                    style = MaterialTheme.typography.body1,
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                                Spacer(modifier = Modifier.height(16.dp))
 
-                        // Display other movie details, e.g., release date, rating, etc.
-                        Text(
-                            text = "Release Date: ${viewState.movieDetail.releaseDate}",
-                            style = MaterialTheme.typography.body2,
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                        Text(
-                            text = "Rating: ${viewState.movieDetail.voteAverage}",
-                            style = MaterialTheme.typography.body2,
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                        // Add more movie details as needed
+                                // Display other movie details, e.g., release date, rating, etc.
+                                Text(
+                                    text = "Release Date: ${viewState.movieDetail.releaseDate}",
+                                    style = MaterialTheme.typography.body2,
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                )
+                                Text(
+                                    text = "Rating: ${viewState.movieDetail.voteAverage}",
+                                    style = MaterialTheme.typography.body2,
+                                    modifier = Modifier.padding(horizontal = 16.dp)
+                                )
+                            }
+                        }
+
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            elevation = 4.dp,
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = "User Reviews",
+                                    style = MaterialTheme.typography.h6
+                                )
+                                // Iterate through user reviews and display them
+//                                movie.userReviews.forEach { review ->
+//                                    ReviewItem(review = review)
+//                                }
+
+                                Button(
+                                    onClick = {
+                                    },
+                                    modifier = Modifier.padding(top = 16.dp),
+                                ) {
+                                    Text(text = "See All")
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -90,6 +90,7 @@ fun MovieAppNavigation(
                     movieId = movieId,
                     viewState = viewState,
                     callbacks = viewModel,
+                    navController = navController,
                 )
             } else {
                 navController.popBackStack()
