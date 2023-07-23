@@ -3,9 +3,11 @@ package com.andremw96.core.domain.mapper
 import com.andremw96.core.data.remote.response.MovieDetailResponse
 import com.andremw96.core.data.remote.response.MovieListByGenreResponse
 import com.andremw96.core.data.remote.response.MovieReviewListResponse
+import com.andremw96.core.data.remote.response.MovieTrailerListResponse
 import com.andremw96.core.domain.schema.Movie
 import com.andremw96.core.domain.schema.MovieDetail
 import com.andremw96.core.domain.schema.MovieReview
+import com.andremw96.core.domain.schema.MovieTrailer
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -115,6 +117,23 @@ class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
             movieReviewListResponse.totalPages,
             movieReviewListResponse.totalResults
         )
+    }
+
+    override fun movieTrailerListToSchema(movieTrailerListResponse: MovieTrailerListResponse): List<MovieTrailer> {
+        return movieTrailerListResponse.results.map {
+            MovieTrailer(
+                id = it.id,
+                iso31661 = it.iso31661,
+                iso6391 = it.iso6391,
+                key = it.key,
+                name = it.name,
+                official = it.official,
+                publishedAt = it.publishedAt,
+                site = it.site,
+                size = it.size,
+                type = it.type
+            )
+        }
     }
 
     private fun convertDateFormat(inputDate: String): String {

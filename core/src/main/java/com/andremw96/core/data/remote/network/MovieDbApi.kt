@@ -1,10 +1,7 @@
 package com.andremw96.core.data.remote.network
 
 import com.andremw96.core.BuildConfig
-import com.andremw96.core.data.remote.response.GenreListResponse
-import com.andremw96.core.data.remote.response.MovieDetailResponse
-import com.andremw96.core.data.remote.response.MovieListByGenreResponse
-import com.andremw96.core.data.remote.response.MovieReviewListResponse
+import com.andremw96.core.data.remote.response.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -34,4 +31,10 @@ interface MovieDbApi {
         @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
         @Query("page") page: Int,
     ): MovieReviewListResponse
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieTrailerListById(
+        @Path("movie_id") movieId: String,
+        @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
+    ): MovieTrailerListResponse
 }

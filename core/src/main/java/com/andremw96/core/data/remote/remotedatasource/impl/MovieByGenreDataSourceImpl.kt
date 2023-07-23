@@ -6,6 +6,7 @@ import com.andremw96.core.data.remote.remotedatasource.MovieByGenreDataSource
 import com.andremw96.core.data.remote.response.MovieDetailResponse
 import com.andremw96.core.data.remote.response.MovieListByGenreResponse
 import com.andremw96.core.data.remote.response.MovieReviewListResponse
+import com.andremw96.core.data.remote.response.MovieTrailerListResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -48,7 +49,10 @@ class MovieByGenreDataSourceImpl @Inject constructor(
         }.flowOn(coroutineDispatcher)
     }
 
-    override fun getMovieReviewListByMovieId(movieId: String, page: Int): Flow<ApiResponse<MovieReviewListResponse>> {
+    override fun getMovieReviewListByMovieId(
+        movieId: String,
+        page: Int
+    ): Flow<ApiResponse<MovieReviewListResponse>> {
         return flow {
             try {
                 val movieReviewList =
@@ -56,6 +60,23 @@ class MovieByGenreDataSourceImpl @Inject constructor(
 
                 if (movieReviewList.results.isNotEmpty()) {
                     emit(ApiResponse.Success(movieReviewList))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(coroutineDispatcher)
+    }
+
+    override fun getMovieTrailerListByMovieId(movieId: String): Flow<ApiResponse<MovieTrailerListResponse>> {
+        return flow {
+            try {
+                val movieTrailerList =
+                    movieDbApi.getMovieTrailerListById(movieId = movieId)
+
+                if (movieTrailerList.results.isNotEmpty()) {
+                    emit(ApiResponse.Success(movieTrailerList))
                 } else {
                     emit(ApiResponse.Empty)
                 }

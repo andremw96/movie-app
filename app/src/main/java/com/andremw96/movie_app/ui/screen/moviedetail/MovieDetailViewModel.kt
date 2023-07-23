@@ -6,6 +6,7 @@ import com.andremw96.core.data.Resource
 import com.andremw96.core.di.IoDispatcher
 import com.andremw96.core.domain.usecase.GetMovieDetailByMovieId
 import com.andremw96.core.domain.usecase.GetMovieReviewListByMovieId
+import com.andremw96.core.domain.usecase.GetMovieTrailerListByMovieId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,7 @@ class MovieDetailViewModel @Inject constructor(
     @IoDispatcher private val coroutineDispatcher: CoroutineDispatcher,
     private val getMovieDetailByMovieId: GetMovieDetailByMovieId,
     private val getMovieReviewListByMovieId: GetMovieReviewListByMovieId,
+    private val getMovieTrailerListByMovieId: GetMovieTrailerListByMovieId,
 ) : ViewModel(), MovieDetailCallbacks {
     private val _viewState: MutableStateFlow<MovieDetailViewState> = MutableStateFlow(
         MovieDetailViewState.initialState()
@@ -45,6 +47,7 @@ class MovieDetailViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         loadMovieReviewListByMovieId(movieId)
+                        loadMovieTrailerListByMovieId(movieId)
 
                         _viewState.value = _viewState.value.copy(
                             movieDetail = it.data,
@@ -107,7 +110,8 @@ class MovieDetailViewModel @Inject constructor(
                             _viewState.value = _viewState.value.copy(
                                 isLoadingMoreUserReviews = false,
                                 errorMessageUserReviews = null,
-                                userReviews = _viewState.value.userReviews + (it.data?.first ?: emptyList())
+                                userReviews = _viewState.value.userReviews + (it.data?.first
+                                    ?: emptyList())
                             )
                         }
                     }
@@ -115,5 +119,33 @@ class MovieDetailViewModel @Inject constructor(
             }
         }
 
+    }
+
+    override fun loadMovieTrailerListByMovieId(movieId: String) {
+        viewModelScope.launch(coroutineDispatcher) {
+            getMovieTrailerListByMovieId(movieId = movieId).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _viewState.value = _viewState.value.copy(
+                            isLoadingVideoTrailers = true,
+                            errorMessageVideoTrailers = null,
+                        )
+                    }
+                    is Resource.Error -> {
+                        _viewState.value = _viewState.value.copy(
+                            isLoadingVideoTrailers = false,
+                            errorMessageVideoTrailers = it.message,
+                        )
+                    }
+                    is Resource.Success -> {
+                        _viewState.value = _viewState.value.copy(
+                            isLoadingVideoTrailers = false,
+                            errorMessageVideoTrailers = null,
+                            videoTrailers = it.data ?: emptyList()
+                        )
+                    }
+                }
+            }
+        }
     }
 }

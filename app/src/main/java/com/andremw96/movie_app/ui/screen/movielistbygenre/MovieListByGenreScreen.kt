@@ -25,6 +25,7 @@ import com.andremw96.movie_app.ui.widget.InfiniteListHandler
 import com.andremw96.movie_app.ui.widget.MovieAppBar
 import com.andremw96.movie_app.ui.widget.MovieEmptyPage
 import com.andremw96.movie_app.ui.widget.MovieErrorPage
+import com.andremw96.movie_app.util.Util.fullPosterPhotoPath
 
 
 @Composable
@@ -133,7 +134,8 @@ fun MovieItem(
             // Display the movie poster image
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://image.tmdb.org/t/p/w500/${movie.posterPath}").crossfade(true)
+                    .data(movie.posterPath.fullPosterPhotoPath())
+                    .crossfade(true)
                     .build(),
                 contentDescription = null,
                 modifier = Modifier

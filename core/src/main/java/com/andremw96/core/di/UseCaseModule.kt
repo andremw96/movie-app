@@ -5,14 +5,8 @@ import com.andremw96.core.domain.mapper.MovieResponseToSchema
 import com.andremw96.core.domain.mapper.MovieResponseToSchemaImpl
 import com.andremw96.core.domain.mapper.impl.GenreListResponseToSchemaImpl
 import com.andremw96.core.domain.repository.MovieRepository
-import com.andremw96.core.domain.usecase.GetGenreList
-import com.andremw96.core.domain.usecase.GetMovieDetailByMovieId
-import com.andremw96.core.domain.usecase.GetMovieListByGenreId
-import com.andremw96.core.domain.usecase.GetMovieReviewListByMovieId
-import com.andremw96.core.domain.usecase.impl.GetGenreListImpl
-import com.andremw96.core.domain.usecase.impl.GetMovieDetailByMovieIdImpl
-import com.andremw96.core.domain.usecase.impl.GetMovieListByGenreIdImpl
-import com.andremw96.core.domain.usecase.impl.GetMovieReviewListByMovieIdImpl
+import com.andremw96.core.domain.usecase.*
+import com.andremw96.core.domain.usecase.impl.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,6 +40,13 @@ class UseCaseModule {
         movieRepository: MovieRepository,
     ): GetMovieReviewListByMovieId =
         GetMovieReviewListByMovieIdImpl(movieRepository = movieRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetMovieTrailerListByMovieId(
+        movieRepository: MovieRepository,
+    ): GetMovieTrailerListByMovieId =
+        GetMovieTrailerListByMovieIdImpl(movieRepository = movieRepository)
 
     @Provides
     @Singleton

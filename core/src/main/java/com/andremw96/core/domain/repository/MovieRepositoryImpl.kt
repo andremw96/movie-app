@@ -6,10 +6,7 @@ import com.andremw96.core.data.remote.remotedatasource.GenreRemoteDataSource
 import com.andremw96.core.data.remote.remotedatasource.MovieByGenreDataSource
 import com.andremw96.core.domain.mapper.GenreListResponseToSchema
 import com.andremw96.core.domain.mapper.MovieResponseToSchema
-import com.andremw96.core.domain.schema.Genre
-import com.andremw96.core.domain.schema.Movie
-import com.andremw96.core.domain.schema.MovieDetail
-import com.andremw96.core.domain.schema.MovieReview
+import com.andremw96.core.domain.schema.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -80,7 +77,10 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getMovieReviewList(movieId: String, page: Int): Flow<Resource<Triple<List<MovieReview.Result>, Int, Int>>> {
+    override fun getMovieReviewList(
+        movieId: String,
+        page: Int
+    ): Flow<Resource<Triple<List<MovieReview.Result>, Int, Int>>> {
         return flow {
             emit(Resource.Loading())
             movieByGenreDataSource.getMovieReviewListByMovieId(movieId, page).collect {
@@ -90,6 +90,26 @@ class MovieRepositoryImpl @Inject constructor(
                     }
                     is ApiResponse.Empty -> {
                         emit(Resource.Success(Triple(emptyList(), 0, 0)))
+
+                    }
+                    is ApiResponse.Error -> {
+                        emit(Resource.Error(it.errorMessage))
+                    }
+                }
+            }
+        }
+    }
+
+    override fun getMovieTrailerList(movieId: String): Flow<Resource<List<MovieTrailer>>> {
+        return flow {
+            emit(Resource.Loading())
+            movieByGenreDataSource.getMovieTrailerListByMovieId(movieId).collect {
+                when (it) {
+                    is ApiResponse.Success -> {
+                        emit(Resource.Success(movieResponseToSchema.movieTrailerListToSchema(it.data)))
+                    }
+                    is ApiResponse.Empty -> {
+                        emit(Resource.Success(emptyList()))
 
                     }
                     is ApiResponse.Error -> {
