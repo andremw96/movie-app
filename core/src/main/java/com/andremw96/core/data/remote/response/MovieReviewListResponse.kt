@@ -19,7 +19,7 @@ data class MovieReviewListResponse(
         @SerializedName("author")
         val author: String,
         @SerializedName("author_details")
-        val authorDetails: AuthorDetails,
+        val authorDetails: AuthorDetails?,
         @SerializedName("content")
         val content: String,
         @SerializedName("created_at")

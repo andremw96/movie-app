@@ -98,10 +98,10 @@ class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
                 MovieReview.Result(
                     author = it.author,
                     authorDetails = MovieReview.Result.AuthorDetails(
-                        avatarPath = it.authorDetails.avatarPath,
-                        name = it.authorDetails.name,
-                        rating = it.authorDetails.rating,
-                        username = it.authorDetails.username,
+                        avatarPath = it.authorDetails?.avatarPath ?: "",
+                        name = it.authorDetails?.name ?: "",
+                        rating = it.authorDetails?.rating ?: -1,
+                        username = it.authorDetails?.username ?: "",
                     ),
                     content = it.content,
                     createdAt = it.createdAt,
