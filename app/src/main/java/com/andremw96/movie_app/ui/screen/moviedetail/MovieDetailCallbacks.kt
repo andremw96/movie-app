@@ -4,4 +4,5 @@ interface MovieDetailCallbacks {
     fun loadMovieDetailByMovieId(movieId: String)
 
     fun loadMovieReviewListByMovieId(movieId: String)
+    fun loadMoreMovieReviewListByMovieId(movieId: String)
 }

@@ -48,11 +48,11 @@ class MovieByGenreDataSourceImpl @Inject constructor(
         }.flowOn(coroutineDispatcher)
     }
 
-    override fun getMovieReviewListByMovieId(movieId: String): Flow<ApiResponse<MovieReviewListResponse>> {
+    override fun getMovieReviewListByMovieId(movieId: String, page: Int): Flow<ApiResponse<MovieReviewListResponse>> {
         return flow {
             try {
                 val movieReviewList =
-                    movieDbApi.getMovieReviewListById(movieId = movieId)
+                    movieDbApi.getMovieReviewListById(movieId = movieId, page = page)
 
                 if (movieReviewList.results.isNotEmpty()) {
                     emit(ApiResponse.Success(movieReviewList))

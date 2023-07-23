@@ -15,7 +15,7 @@ data class MovieListByGenreViewState(
         fun initialState(): MovieListByGenreViewState =
             MovieListByGenreViewState(
                 movieList = emptyList(),
-                totalPages = 0,
+                totalPages = 1,
                 totalResults = 0,
                 isLoading = false,
                 errorMessage = null,

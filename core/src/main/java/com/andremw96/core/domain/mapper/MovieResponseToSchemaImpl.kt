@@ -6,6 +6,8 @@ import com.andremw96.core.data.remote.response.MovieReviewListResponse
 import com.andremw96.core.domain.schema.Movie
 import com.andremw96.core.domain.schema.MovieDetail
 import com.andremw96.core.domain.schema.MovieReview
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
@@ -106,12 +108,19 @@ class MovieResponseToSchemaImpl @Inject constructor() : MovieResponseToSchema {
                     content = it.content,
                     createdAt = it.createdAt,
                     id = it.id,
-                    updatedAt = it.updatedAt,
+                    updatedAt = convertDateFormat(it.updatedAt),
                     url = it.url
                 )
             },
             movieReviewListResponse.totalPages,
             movieReviewListResponse.totalResults
         )
+    }
+
+    private fun convertDateFormat(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+        val date = inputFormat.parse(inputDate)
+        return outputFormat.format(date)
     }
 }

@@ -80,10 +80,10 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getMovieReviewList(movieId: String): Flow<Resource<Triple<List<MovieReview.Result>, Int, Int>>> {
+    override fun getMovieReviewList(movieId: String, page: Int): Flow<Resource<Triple<List<MovieReview.Result>, Int, Int>>> {
         return flow {
             emit(Resource.Loading())
-            movieByGenreDataSource.getMovieReviewListByMovieId(movieId).collect {
+            movieByGenreDataSource.getMovieReviewListByMovieId(movieId, page).collect {
                 when (it) {
                     is ApiResponse.Success -> {
                         emit(Resource.Success(movieResponseToSchema.movieReviewListToSchema(it.data)))

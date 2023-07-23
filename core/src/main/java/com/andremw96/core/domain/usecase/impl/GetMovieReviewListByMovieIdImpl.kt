@@ -10,7 +10,7 @@ import javax.inject.Inject
 class GetMovieReviewListByMovieIdImpl @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : GetMovieReviewListByMovieId {
-    override fun invoke(movieId: String): Flow<Resource<Triple<List<MovieReview.Result>, Int, Int>>> {
-        return movieRepository.getMovieReviewList(movieId)
+    override fun invoke(movieId: String, page: Int): Flow<Resource<Triple<List<MovieReview.Result>, Int, Int>>> {
+        return movieRepository.getMovieReviewList(movieId, page)
     }
 }

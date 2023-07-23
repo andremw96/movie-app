@@ -32,5 +32,6 @@ interface MovieDbApi {
     suspend fun getMovieReviewListById(
         @Path("movie_id") movieId: String,
         @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
+        @Query("page") page: Int,
     ): MovieReviewListResponse
 }

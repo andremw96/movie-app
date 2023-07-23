@@ -9,7 +9,10 @@ data class MovieDetailViewState(
     val errorMessage: String?,
     val isLoadingUserReviews: Boolean,
     val errorMessageUserReviews: String?,
-    val userReviews: List<MovieReview.Result>
+    val userReviews: List<MovieReview.Result>,
+    val isLoadingMoreUserReviews: Boolean,
+    val currentPageUserReviews: Int,
+    val totalPagesUserReviews: Int,
 ) {
     companion object {
         fun initialState(): MovieDetailViewState =
@@ -18,8 +21,11 @@ data class MovieDetailViewState(
                 isLoading = false,
                 errorMessage = null,
                 isLoadingUserReviews = false,
+                isLoadingMoreUserReviews = false,
                 errorMessageUserReviews = null,
                 userReviews = emptyList(),
+                currentPageUserReviews = 1,
+                totalPagesUserReviews = 1,
             )
     }
 }

@@ -14,6 +14,7 @@ import com.andremw96.movie_app.ui.screen.genrelist.GenreListScreen
 import com.andremw96.movie_app.ui.screen.genrelist.GenreListViewModel
 import com.andremw96.movie_app.ui.screen.moviedetail.MovieDetailScreen
 import com.andremw96.movie_app.ui.screen.moviedetail.MovieDetailViewModel
+import com.andremw96.movie_app.ui.screen.moviedetail.UserReviewListScreen
 import com.andremw96.movie_app.ui.screen.movielistbygenre.MovieListByGenreScreen
 import com.andremw96.movie_app.ui.screen.movielistbygenre.MovieListByGenreViewModel
 
@@ -21,6 +22,8 @@ import com.andremw96.movie_app.ui.screen.movielistbygenre.MovieListByGenreViewMo
 fun MovieAppNavigation(
     navController: NavHostController,
 ) {
+    val singletonMovieDetailViewModel: MovieDetailViewModel = hiltViewModel()
+
     NavHost(navController = navController, startDestination = NavGraphConstant.GENRE_LIST) {
         composable(route = NavGraphConstant.GENRE_LIST) {
             val viewModel: GenreListViewModel = hiltViewModel()
@@ -76,25 +79,33 @@ fun MovieAppNavigation(
                 },
             )
         ) {
-            val viewModel: MovieDetailViewModel = hiltViewModel()
-            val viewState by viewModel.viewState.collectAsState()
+            val viewState by singletonMovieDetailViewModel.viewState.collectAsState()
 
             val movieId = it.arguments?.getString(NavGraphConstant.MOVIE_ID)
 
             if (movieId != null) {
                 LaunchedEffect(key1 = Unit, block = {
-                    viewModel.loadMovieDetailByMovieId(movieId = movieId)
+                    singletonMovieDetailViewModel.loadMovieDetailByMovieId(movieId = movieId)
                 })
 
                 MovieDetailScreen(
                     movieId = movieId,
                     viewState = viewState,
-                    callbacks = viewModel,
+                    callbacks = singletonMovieDetailViewModel,
                     navController = navController,
                 )
             } else {
                 navController.popBackStack()
             }
+        }
+        composable(route = NavGraphConstant.USER_REVIEW_LIST) {
+            val viewState by singletonMovieDetailViewModel.viewState.collectAsState()
+
+            UserReviewListScreen(
+                viewState = viewState,
+                callbacks = singletonMovieDetailViewModel,
+                navController = navController,
+            )
         }
     }
 }

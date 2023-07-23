@@ -59,7 +59,7 @@ class MovieDetailViewModel @Inject constructor(
 
     override fun loadMovieReviewListByMovieId(movieId: String) {
         viewModelScope.launch(coroutineDispatcher) {
-            getMovieReviewListByMovieId(movieId = movieId).collect {
+            getMovieReviewListByMovieId(movieId = movieId, page = 1).collect {
                 when (it) {
                     is Resource.Loading -> {
                         _viewState.value = _viewState.value.copy(
@@ -83,5 +83,37 @@ class MovieDetailViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun loadMoreMovieReviewListByMovieId(movieId: String) {
+        val newPageToLoad = _viewState.value.currentPageUserReviews + 1
+        if (newPageToLoad <= _viewState.value.totalPagesUserReviews) {
+            viewModelScope.launch(coroutineDispatcher) {
+                getMovieReviewListByMovieId(movieId = movieId, page = newPageToLoad).collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            _viewState.value = _viewState.value.copy(
+                                isLoadingMoreUserReviews = true,
+                                errorMessageUserReviews = null,
+                            )
+                        }
+                        is Resource.Error -> {
+                            _viewState.value = _viewState.value.copy(
+                                isLoadingMoreUserReviews = false,
+                                errorMessageUserReviews = null,
+                            )
+                        }
+                        is Resource.Success -> {
+                            _viewState.value = _viewState.value.copy(
+                                isLoadingMoreUserReviews = false,
+                                errorMessageUserReviews = null,
+                                userReviews = _viewState.value.userReviews + (it.data?.first ?: emptyList())
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

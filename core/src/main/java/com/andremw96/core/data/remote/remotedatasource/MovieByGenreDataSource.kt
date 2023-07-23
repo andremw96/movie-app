@@ -14,5 +14,5 @@ interface MovieByGenreDataSource {
 
     fun getMovieDetailByMovieId(movieId: String): Flow<ApiResponse<MovieDetailResponse>>
 
-    fun getMovieReviewListByMovieId(movieId: String): Flow<ApiResponse<MovieReviewListResponse>>
+    fun getMovieReviewListByMovieId(movieId: String, page: Int,): Flow<ApiResponse<MovieReviewListResponse>>
 }
