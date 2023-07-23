@@ -11,6 +11,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayCircleOutline
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -21,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -85,9 +88,7 @@ fun MovieDetailScreen(
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                         TrailerCard(
                             viewState
-                        ) { key, name ->
-                            navController.navigate("${NavGraphConstant.VIDEO_PLAYER}/$key/$name")
-                        }
+                        )
 
                         OverviewCard(movieDetail = viewState.movieDetail)
 
@@ -230,7 +231,6 @@ fun ReviewItem(review: MovieReview.Result) {
 @Composable
 fun TrailerCard(
     viewState: MovieDetailViewState,
-    onItemClicked: (String, String) -> Unit,
 ) {
     if (viewState.errorMessageVideoTrailers == null) {
         // Display the movie poster image & video trailers
@@ -274,7 +274,6 @@ fun TrailerCard(
                     items(viewState.videoTrailers) {
                         TrailerItem(
                             trailer = it,
-                            onItemClicked = onItemClicked,
                         )
                     }
                 }
@@ -286,8 +285,20 @@ fun TrailerCard(
 @Composable
 fun TrailerItem(
     trailer: MovieTrailer,
-    onItemClicked: (String, String) -> Unit,
 ) {
+    val openYoutubeDialog = remember { mutableStateOf(false) }
+    val clickedVideoId = remember { mutableStateOf("") }
+
+    if (openYoutubeDialog.value) {
+        Dialog(
+            onDismissRequest = {
+                openYoutubeDialog.value = false
+            },
+        ) {
+            com.andremw96.movie_app.ui.widget.YouTubePlayerView(clickedVideoId.value)
+        }
+    }
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -339,7 +350,8 @@ fun TrailerItem(
                 modifier = Modifier
                     .fillMaxSize()
                     .clickable {
-                        onItemClicked(trailer.key, trailer.name)
+                        openYoutubeDialog.value = true
+                        clickedVideoId.value = trailer.key
                     }
             )
         }

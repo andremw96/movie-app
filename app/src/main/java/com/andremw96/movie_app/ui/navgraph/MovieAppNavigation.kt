@@ -17,7 +17,6 @@ import com.andremw96.movie_app.ui.screen.moviedetail.MovieDetailViewModel
 import com.andremw96.movie_app.ui.screen.moviedetail.UserReviewListScreen
 import com.andremw96.movie_app.ui.screen.movielistbygenre.MovieListByGenreScreen
 import com.andremw96.movie_app.ui.screen.movielistbygenre.MovieListByGenreViewModel
-import com.andremw96.movie_app.ui.widget.YoutubePlayerScreen
 
 @Composable
 fun MovieAppNavigation(
@@ -107,26 +106,6 @@ fun MovieAppNavigation(
                 callbacks = singletonMovieDetailViewModel,
                 navController = navController,
             )
-        }
-        composable(
-            route = "${NavGraphConstant.VIDEO_PLAYER}/{${NavGraphConstant.VIDEO_PLAYER_KEY}}/{${NavGraphConstant.VIDEO_PLAYER_TITLE}}",
-            arguments = listOf(
-                navArgument(NavGraphConstant.GENRE_ID) {
-                    type = NavType.StringType
-                    defaultValue = ""
-                },
-                navArgument(NavGraphConstant.GENRE_NAME) {
-                    type = NavType.StringType
-                    defaultValue = ""
-                }
-            )
-        ) {
-            val videoKey = it.arguments?.getString(NavGraphConstant.VIDEO_PLAYER_KEY)
-            val videoTitle = it.arguments?.getString(NavGraphConstant.VIDEO_PLAYER_TITLE)
-
-            if (videoKey != null && videoTitle != null) {
-                YoutubePlayerScreen(title = videoTitle, videoId = videoKey)
-            }
         }
     }
 }
