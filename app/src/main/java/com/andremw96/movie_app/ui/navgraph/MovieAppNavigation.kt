@@ -35,9 +35,13 @@ fun MovieAppNavigation(
             )
         }
         composable(
-            route = "${NavGraphConstant.MOVIE_LIST_BY_GENRE}/{${NavGraphConstant.GENRE_ID}}",
+            route = "${NavGraphConstant.MOVIE_LIST_BY_GENRE}/{${NavGraphConstant.GENRE_ID}}/{${NavGraphConstant.GENRE_NAME}}",
             arguments = listOf(
                 navArgument(NavGraphConstant.GENRE_ID) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument(NavGraphConstant.GENRE_NAME) {
                     type = NavType.StringType
                     defaultValue = ""
                 }
@@ -47,6 +51,7 @@ fun MovieAppNavigation(
             val viewState by viewModel.viewState.collectAsState()
 
             val genreId = it.arguments?.getString(NavGraphConstant.GENRE_ID)
+            val genreName = it.arguments?.getString(NavGraphConstant.GENRE_NAME)
 
             LaunchedEffect(key1 = Unit, block = {
                 viewModel.loadMovieListByGenre(genreId ?: "")
@@ -54,6 +59,7 @@ fun MovieAppNavigation(
 
             MovieListByGenreScreen(
                 genreId = genreId ?: "",
+                genreName = genreName?: "",
                 viewState = viewState,
                 callbacks = viewModel
             )

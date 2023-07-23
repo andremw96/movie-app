@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface GetMovieListByGenreId {
-    operator fun invoke(genreId: String,): Flow<Resource<List<Movie>>>
+    operator fun invoke(genreId: String, page: Int): Flow<Resource<Triple<List<Movie>, Int, Int>>>
 }

@@ -3,31 +3,41 @@ package com.andremw96.movie_app.ui.screen.movielistbygenre
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.andremw96.core.domain.schema.Movie
+import com.andremw96.movie_app.R
+import com.andremw96.movie_app.ui.widget.InfiniteListHandler
 import com.andremw96.movie_app.ui.widget.MovieAppBar
 import com.andremw96.movie_app.ui.widget.MovieEmptyPage
 import com.andremw96.movie_app.ui.widget.MovieErrorPage
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 
 @Composable
 fun MovieListByGenreScreen(
     genreId: String,
+    genreName: String,
     viewState: MovieListByGenreViewState,
     callbacks: MovieListByGenreCallbacks,
 ) {
+    val lazyListState = rememberLazyListState()
+
     Scaffold(topBar = {
-        MovieAppBar()
+        MovieAppBar(
+            title = "${stringResource(id = R.string.movie_list_title)} $genreName",
+        )
     }, content = { paddingValues ->
         Column(
             modifier = Modifier
@@ -58,10 +68,27 @@ fun MovieListByGenreScreen(
                     })
                 }
                 else -> {
-                    LazyColumn {
+                    LazyColumn(
+                        state = lazyListState
+                    ) {
                         items(viewState.movieList) {
                             MovieItem(movie = it)
                         }
+
+                        if (viewState.isLoadingMore) {
+                            item {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            }
+                        }
+                    }
+
+                    InfiniteListHandler(lazyListState = lazyListState) {
+                        callbacks.loadMoreMovieListByGenre(genreId)
                     }
                 }
             }

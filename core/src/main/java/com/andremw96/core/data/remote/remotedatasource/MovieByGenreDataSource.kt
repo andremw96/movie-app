@@ -5,5 +5,5 @@ import com.andremw96.core.data.remote.response.MovieListByGenreResponse
 import kotlinx.coroutines.flow.Flow
 
 interface MovieByGenreDataSource {
-    fun getMovieListByGenreId(genreId: String): Flow<ApiResponse<MovieListByGenreResponse>>
+    fun getMovieListByGenreId(genreId: String, page: Int,): Flow<ApiResponse<MovieListByGenreResponse>>
 }

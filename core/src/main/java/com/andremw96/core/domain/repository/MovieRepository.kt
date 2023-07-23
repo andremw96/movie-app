@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     fun getGenreList(): Flow<Resource<List<Genre>>>
 
-    fun getMovieListByGenreId(genreId: String): Flow<Resource<List<Movie>>>
+    fun getMovieListByGenreId(genreId: String, page: Int,): Flow<Resource<Triple<List<Movie>, Int, Int>>>
 }

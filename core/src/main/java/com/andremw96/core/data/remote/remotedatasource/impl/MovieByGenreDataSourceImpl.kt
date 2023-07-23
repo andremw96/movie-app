@@ -14,10 +14,14 @@ class MovieByGenreDataSourceImpl @Inject constructor(
     private val coroutineDispatcher: CoroutineDispatcher,
     private val movieDbApi: MovieDbApi,
 ) : MovieByGenreDataSource {
-    override fun getMovieListByGenreId(genreId: String): Flow<ApiResponse<MovieListByGenreResponse>> {
+    override fun getMovieListByGenreId(
+        genreId: String,
+        page: Int
+    ): Flow<ApiResponse<MovieListByGenreResponse>> {
         return flow {
             try {
-                val movieListByGenreId = movieDbApi.getMovieListByGenreId(withGenres = genreId)
+                val movieListByGenreId =
+                    movieDbApi.getMovieListByGenreId(withGenres = genreId, page = page)
 
                 if (movieListByGenreId.results.isNotEmpty()) {
                     emit(ApiResponse.Success(movieListByGenreId))

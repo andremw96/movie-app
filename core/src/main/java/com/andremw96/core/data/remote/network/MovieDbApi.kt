@@ -16,5 +16,6 @@ interface MovieDbApi {
     suspend fun getMovieListByGenreId(
         @Query("api_key") appId: String = BuildConfig.MOVIE_DB_API_KEY,
         @Query("with_genres") withGenres: String,
+        @Query("page") page: Int,
     ): MovieListByGenreResponse
 }

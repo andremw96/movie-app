@@ -1,5 +1,6 @@
 package com.andremw96.movie_app.ui.screen.movielistbygenre
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.andremw96.core.data.Resource
@@ -25,7 +26,7 @@ class MovieListByGenreViewModel @Inject constructor(
 
     override fun loadMovieListByGenre(genreId: String) {
         viewModelScope.launch(coroutineDispatcher) {
-            getMovieListByGenreId(genreId = genreId).collect {
+            getMovieListByGenreId(genreId = genreId, page = 1).collect {
                 when (it) {
                     is Resource.Loading -> {
                         _viewState.value = _viewState.value.copy(
@@ -43,9 +44,45 @@ class MovieListByGenreViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         _viewState.value = _viewState.value.copy(
-                            movieList = it.data ?: emptyList(),
+                            movieList = it.data?.first ?: emptyList(),
                             isLoading = false,
                             errorMessage = null,
+                            totalPages = it.data?.second ?: 0,
+                            totalResults = it.data?.third ?: 0,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    override fun loadMoreMovieListByGenre(genreId: String) {
+        val newPageToLoad = _viewState.value.currentPage+1
+        Log.d("loadmore", "$newPageToLoad")
+        viewModelScope.launch(coroutineDispatcher) {
+            getMovieListByGenreId(genreId = genreId, page = newPageToLoad).collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        _viewState.value = _viewState.value.copy(
+                            errorMessage = null,
+                            isLoadingMore = true,
+                        )
+                    }
+                    is Resource.Error -> {
+                        _viewState.value = _viewState.value.copy(
+                            errorMessage = null,
+                            isLoadingMore = false,
+                        )
+                    }
+                    is Resource.Success -> {
+                        _viewState.value = _viewState.value.copy(
+                            movieList = _viewState.value.movieList + (it.data?.first ?: emptyList()),
+                            isLoading = false,
+                            errorMessage = null,
+                            totalPages = it.data?.second ?: 0,
+                            totalResults = it.data?.third ?: 0,
+                            isLoadingMore = false,
+                            currentPage = newPageToLoad
                         )
                     }
                 }
