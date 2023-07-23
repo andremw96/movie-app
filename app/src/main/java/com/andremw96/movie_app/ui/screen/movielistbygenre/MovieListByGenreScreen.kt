@@ -14,6 +14,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.andremw96.core.domain.schema.Movie
@@ -31,12 +32,16 @@ fun MovieListByGenreScreen(
     genreName: String,
     viewState: MovieListByGenreViewState,
     callbacks: MovieListByGenreCallbacks,
+    navController: NavController,
 ) {
     val lazyListState = rememberLazyListState()
 
     Scaffold(topBar = {
         MovieAppBar(
             title = "${stringResource(id = R.string.movie_list_title)} $genreName",
+            onBackClick = {
+                navController.popBackStack()
+            }
         )
     }, content = { paddingValues ->
         Column(

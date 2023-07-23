@@ -61,7 +61,8 @@ fun MovieAppNavigation(
                 genreId = genreId ?: "",
                 genreName = genreName?: "",
                 viewState = viewState,
-                callbacks = viewModel
+                callbacks = viewModel,
+                navController = navController,
             )
         }
     }
