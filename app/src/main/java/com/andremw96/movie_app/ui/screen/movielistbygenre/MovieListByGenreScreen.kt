@@ -1,12 +1,13 @@
 package com.andremw96.movie_app.ui.screen.movielistbygenre
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +24,6 @@ import com.andremw96.movie_app.ui.widget.InfiniteListHandler
 import com.andremw96.movie_app.ui.widget.MovieAppBar
 import com.andremw96.movie_app.ui.widget.MovieEmptyPage
 import com.andremw96.movie_app.ui.widget.MovieErrorPage
-import kotlinx.coroutines.flow.distinctUntilChanged
 
 
 @Composable
@@ -77,7 +77,12 @@ fun MovieListByGenreScreen(
                         state = lazyListState
                     ) {
                         items(viewState.movieList) {
-                            MovieItem(movie = it)
+                            MovieItem(
+                                movie = it,
+                                onItemClicked = {
+
+                                }
+                            )
                         }
 
                         if (viewState.isLoadingMore) {
@@ -102,11 +107,17 @@ fun MovieListByGenreScreen(
 }
 
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(
+    movie: Movie,
+    onItemClicked: () -> Unit,
+) {
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onItemClicked()
+            },
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp)
     ) {

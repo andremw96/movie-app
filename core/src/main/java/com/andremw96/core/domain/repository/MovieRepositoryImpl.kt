@@ -8,6 +8,7 @@ import com.andremw96.core.domain.mapper.GenreListResponseToSchema
 import com.andremw96.core.domain.mapper.MovieResponseToSchema
 import com.andremw96.core.domain.schema.Genre
 import com.andremw96.core.domain.schema.Movie
+import com.andremw96.core.domain.schema.MovieDetail
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -46,10 +47,29 @@ class MovieRepositoryImpl @Inject constructor(
             movieByGenreDataSource.getMovieListByGenreId(genreId, page).collect {
                 when (it) {
                     is ApiResponse.Success -> {
-                        emit(Resource.Success(movieResponseToSchema(it.data)))
+                        emit(Resource.Success(movieResponseToSchema.movieResponseToSchema(it.data)))
                     }
                     is ApiResponse.Empty -> {
                         emit(Resource.Success(Triple(emptyList(), 0, 0)))
+                    }
+                    is ApiResponse.Error -> {
+                        emit(Resource.Error(it.errorMessage))
+                    }
+                }
+            }
+        }
+    }
+
+    override fun getMovieDetail(movieId: String): Flow<Resource<MovieDetail>> {
+        return flow {
+            emit(Resource.Loading())
+            movieByGenreDataSource.getMovieDetailByMovieId(movieId).collect {
+                when (it) {
+                    is ApiResponse.Success -> {
+                        emit(Resource.Success(movieResponseToSchema.movieResponseDetailToSchema(it.data)))
+                    }
+                    is ApiResponse.Empty -> {
+                        // currently there is no empty state
                     }
                     is ApiResponse.Error -> {
                         emit(Resource.Error(it.errorMessage))

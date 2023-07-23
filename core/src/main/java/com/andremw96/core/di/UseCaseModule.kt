@@ -6,9 +6,11 @@ import com.andremw96.core.domain.mapper.MovieResponseToSchemaImpl
 import com.andremw96.core.domain.mapper.impl.GenreListResponseToSchemaImpl
 import com.andremw96.core.domain.repository.MovieRepository
 import com.andremw96.core.domain.usecase.GetGenreList
+import com.andremw96.core.domain.usecase.GetMovieDetailByMovieId
 import com.andremw96.core.domain.usecase.GetMovieListByGenreId
-import com.andremw96.core.domain.usecase.GetMovieListByGenreIdImpl
 import com.andremw96.core.domain.usecase.impl.GetGenreListImpl
+import com.andremw96.core.domain.usecase.impl.GetMovieDetailByMovieIdImpl
+import com.andremw96.core.domain.usecase.impl.GetMovieListByGenreIdImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +31,12 @@ class UseCaseModule {
     fun provideGetMovieListByGenreId(
         movieRepository: MovieRepository,
     ): GetMovieListByGenreId = GetMovieListByGenreIdImpl(movieRepository = movieRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetMovieDetailByMovieId(
+        movieRepository: MovieRepository,
+    ): GetMovieDetailByMovieId = GetMovieDetailByMovieIdImpl(movieRepository = movieRepository)
 
     @Provides
     @Singleton
