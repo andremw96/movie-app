@@ -1,18 +1,22 @@
 package com.andremw96.movie_app.ui.widget
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.andremw96.movie_app.R
+import com.andremw96.movie_app.ui.theme.MovieAppTheme
 
 @Composable
 fun MovieErrorPage(
@@ -22,7 +26,7 @@ fun MovieErrorPage(
 ) {
     Column(
         modifier = modifier
-            .background(color = Color.White)
+            .background(color = MovieAppTheme.colors.errorPageColor.backgroundColor)
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
