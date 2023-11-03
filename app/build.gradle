@@ -69,4 +69,6 @@ dependencies {
 
     // youtube player
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtube_player_version")
+
+    implementation "androidx.core:core-splashscreen:1.0.1"
 }
