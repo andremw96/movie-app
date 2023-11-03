@@ -7,6 +7,10 @@ import androidx.compose.material.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.unit.dp
+import com.andremw96.movie_app.ui.theme.colors.LocalMovieAppColor
+import com.andremw96.movie_app.ui.theme.colors.MovieAppColor
+import com.andremw96.movie_app.ui.theme.colors.movieAppColorDark
+import com.andremw96.movie_app.ui.theme.colors.movieAppColorLight
 
 object MovieAppTheme {
     val colors: MovieAppColor
@@ -15,9 +19,10 @@ object MovieAppTheme {
 
 @Composable
 fun MovieAppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (isSystemInDarkTheme()) {
+    val colors = if (darkTheme) {
         movieAppColorDark
     } else movieAppColorLight
 

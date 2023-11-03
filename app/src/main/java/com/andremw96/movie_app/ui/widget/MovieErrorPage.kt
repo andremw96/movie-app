@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.andremw96.movie_app.R
 import com.andremw96.movie_app.ui.theme.MovieAppTheme
@@ -36,14 +37,16 @@ fun MovieErrorPage(
                 id = R.string.something_went_wrong
             ),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.h5,
+            color = MovieAppTheme.colors.errorPageColor.textColor,
         )
 
         Spacer(modifier = Modifier.padding(12.dp))
 
         Text(
             text = errorMessage,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = MovieAppTheme.colors.errorPageColor.textColor,
         )
 
         Spacer(modifier = Modifier.padding(12.dp))
@@ -52,6 +55,16 @@ fun MovieErrorPage(
             retryOnClick()
         }) {
             Text(text = stringResource(id = R.string.retry))
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MovieErrorPagePreview() {
+    MovieAppTheme(darkTheme = false) {
+        MovieErrorPage(errorMessage = "error") {
+
         }
     }
 }
